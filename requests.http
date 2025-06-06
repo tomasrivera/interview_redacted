@@ -1,0 +1,90 @@
+@protocol = http
+@hostname = localhost
+@port = 8000
+@host = {{protocol}}://{{hostname}}:{{port}}
+@flightId = 6842eb5ad311c657aaf78c71
+@passengerId = 963762
+@newPassengerId = 123456
+@passengers = [{"id":139577,"name":"MartínAlvarez","hasConnections":false,"age":2,"flightCategory":"Gold","reservationId":"8ZC5KYVK","hasCheckedBaggage":false},{"id":530874,"name":"JorgeHernández","hasConnections":false,"age":16,"flightCategory":"Black","reservationId":"O2DQ3SZS","hasCheckedBaggage":false},{"id":426098,"name":"PedroRuiz","hasConnections":false,"age":33,"flightCategory":"Black","reservationId":"KSXXOALO","hasCheckedBaggage":true},{"id":757837,"name":"PaolaVargas","hasConnections":true,"age":48,"flightCategory":"Platinum","reservationId":"8ZC5KYVK","hasCheckedBaggage":false},{"id":366477,"name":"JuanOrtega","hasConnections":true,"age":75,"flightCategory":"Platinum","reservationId":"RPT8LU2M","hasCheckedBaggage":true},{"id":825792,"name":"JorgeVargas","hasConnections":true,"age":37,"flightCategory":"Black","reservationId":"8ZC5KYVK","hasCheckedBaggage":true},{"id":668601,"name":"PaolaHernández","hasConnections":true,"age":30,"flightCategory":"Black","reservationId":"RPT8LU2M","hasCheckedBaggage":false},{"id":245409,"name":"CarlosGonzález","hasConnections":true,"age":34,"flightCategory":"Normal","reservationId":"RPT8LU2M","hasCheckedBaggage":false},{"id":610771,"name":"RicardoRuiz","hasConnections":true,"age":9,"flightCategory":"Gold","reservationId":"KSXXOALO","hasCheckedBaggage":true},{"id":139485,"name":"MartínRuiz","hasConnections":false,"age":41,"flightCategory":"Gold","reservationId":"KSXXOALO","hasCheckedBaggage":false},{"id":552697,"name":"AnaFernández","hasConnections":true,"age":18,"flightCategory":"Gold","reservationId":"426OMP5O","hasCheckedBaggage":true},{"id":620159,"name":"ValentinaPérez","hasConnections":false,"age":56,"flightCategory":"Normal","reservationId":"FKY4HRMH","hasCheckedBaggage":false},{"id":120718,"name":"PaolaDíaz","hasConnections":true,"age":5,"flightCategory":"Platinum","reservationId":"8ZC5KYVK","hasCheckedBaggage":true},{"id":953815,"name":"JavierSilva","hasConnections":false,"age":44,"flightCategory":"Gold","reservationId":"2ZOTLIVZ","hasCheckedBaggage":false},{"id":164557,"name":"ValentinaNavarro","hasConnections":false,"age":43,"flightCategory":"Black","reservationId":"RPT8LU2M","hasCheckedBaggage":true},{"id":566203,"name":"LuisRíos","hasConnections":true,"age":16,"flightCategory":"Normal","reservationId":"S05KSFJ6","hasCheckedBaggage":false},{"id":550014,"name":"CamilaRodríguez","hasConnections":true,"age":53,"flightCategory":"Black","reservationId":"8ZC5KYVK","hasCheckedBaggage":true},{"id":371528,"name":"ValentinaPérez","hasConnections":false,"age":13,"flightCategory":"Normal","reservationId":"UAN6K7Q8","hasCheckedBaggage":true},{"id":963762,"name":"LuisOrtega","hasConnections":true,"age":20,"flightCategory":"Platinum","reservationId":"5PLUY0UN","hasCheckedBaggage":true},{"id":241222,"name":"LuisFernández","hasConnections":false,"age":11,"flightCategory":"Black","reservationId":"KSXXOALO","hasCheckedBaggage":false}]
+@passengers2 = [{"id":139577,"name":"MartínAlvarez","hasConnections":false,"age":2,"flightCategory":"Gold","reservationId":"8ZC5KYVK","hasCheckedBaggage":false},{"id":530874,"name":"JorgeHernández","hasConnections":false,"age":16,"flightCategory":"Black","reservationId":"O2DQ3SZS","hasCheckedBaggage":false}]
+@passengers3 = [{"id":139577,"name":"MartínAlvarez","hasConnections":false,"age":2,"flightCategory":"Gold","reservationId":"8ZC5KYVK","hasCheckedBaggage":false},{"id":139577,"name":"MartínAlvarez","hasConnections":false,"age":2,"flightCategory":"Gold","reservationId":"8ZC5KYVK","hasCheckedBaggage":false}]
+
+### Get all flights
+GET {{host}}/flights
+
+### Get flights by code
+GET {{host}}/flights
+    ?flightCode=string
+
+### Get flight by ID
+GET {{host}}/flights/{{flightId}}
+
+### Create a flight
+POST {{host}}/flights/
+
+{
+    "flightCode": "AA123",
+    "capacity": 5,
+    "passengers": {{passengers}}
+}
+
+### Update flight code
+PUT {{host}}/flights/{{flightId}}
+
+{
+    "flightCode": "AA124"
+}
+
+### Update flight passengers
+PUT {{host}}/flights/{{flightId}}
+
+{
+    "flightCode": "AA124",
+    "passengers": {{passengers2}}
+}
+
+### Delete flight
+DELETE {{host}}/flights/{{flightId}}
+
+### Get all passengers
+GET {{host}}/flights/{{flightId}}/passengers
+    ?hasConnections=true
+    &flightCategory=Platinum
+    &age=20
+    &reservationId=5PLUY0UN
+    &hasCheckedBaggage=true
+    &name=LuisOrtega
+
+### Create passenger
+POST {{host}}/flights/{{flightId}}/passengers
+
+[
+    {
+        "id": {{newPassengerId}},
+        "name": "John Doe",
+        "hasConnections": true,
+        "age": 25,
+        "flightCategory": "Platinum",
+        "reservationId": "5PLUY0UN",
+        "hasCheckedBaggage": true
+    }
+]
+
+
+### Update passenger
+PUT {{host}}/flights/{{flightId}}/passengers/{{newPassengerId}}
+
+{
+    "name": "John Doe",
+    "hasConnections": false,
+    "age": 20,
+    "flightCategory": "Platinum",
+    "reservationId": "5PLUY0UN2",
+    "hasCheckedBaggage": true
+}
+
+### Delete passenger
+DELETE {{host}}/flights/{{flightId}}/passengers/{{newPassengerId}}
+
+### Get passenger by ID
+GET {{host}}/flights/{{flightId}}/passengers/{{newPassengerId}}

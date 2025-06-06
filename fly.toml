@@ -1,0 +1,39 @@
+# fly.toml app configuration file generated for interview_redacted on 2025-03-27T16:26:46-03:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = 'interview_redacted'
+primary_region = 'scl'
+
+[processes]
+app = '/app/.venv/bin/fastapi run src/main.py'
+worker = '/app/.venv/bin/celery -A src.worker.celery worker --loglevel=info'
+flower = '/app/.venv/bin/celery -A src.worker.celery flower --basic_auth=admin:password'
+
+[build]
+
+[http_service]
+  internal_port = 8000
+  force_https = true
+  auto_stop_machines = 'stop'
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ['app']
+
+[[services]]
+  internal_port = 5555
+  protocol = "tcp"
+  auto_stop_machines = 'stop'
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ["flower"]
+
+  [[services.ports]]
+    handlers = ["tls", "http"]
+    port = 5555
+
+[[vm]]
+  memory = '1gb'
+  cpu_kind = 'shared'
+  cpus = 1
