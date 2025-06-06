@@ -1,5 +1,5 @@
 from collections import defaultdict
-from typing import Any, DefaultDict, TypedDict
+from typing import Any, TypedDict
 
 from bson import ObjectId
 
@@ -308,11 +308,12 @@ def _order_passengers(
     connection_weight = 3
     checked_baggage_weight = 2
     age_weight = 1
+
     class GroupedPassengers(TypedDict):
         total: int
         passengers: list[PassengerCreate]
 
-    groups:  defaultdict[str, GroupedPassengers] = defaultdict()
+    groups: defaultdict[str, GroupedPassengers] = defaultdict()
     for p in passengers:
         groups.setdefault(p.reservation_id, {"passengers": [], "total": 0})
         groups[p.reservation_id]["passengers"].append(p)

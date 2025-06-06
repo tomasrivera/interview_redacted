@@ -217,7 +217,8 @@ async def get_passengers_endpoint(
     "/{flight_id}/overbooked_passengers",
 )
 async def get_overbooked_passengers_endpoint(
-    repository: FlightsRepository, flight_id: Annotated[str, Path(...)],
+    repository: FlightsRepository,
+    flight_id: Annotated[str, Path(...)],
 ) -> list[Passenger]:
     try:
         flight = await flights_get(
